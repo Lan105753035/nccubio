@@ -100,10 +100,6 @@ for (i in 1:nchx)
     
   }
 }
-repx[nchx]
-repy[nchy]
-s_m[repx[nchx],repy[nchy]]
-F[nchx + 1,nchy + 1]
 
 # trace back 
 
