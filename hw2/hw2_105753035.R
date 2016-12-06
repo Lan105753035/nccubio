@@ -67,16 +67,16 @@ s_m<-as.matrix(s_m)
 
 #bulid matrix
 
-nchx = nchar(ff[1])
+nchx = nchar(sequence[1])
 repx = rep(0,nchx)
-for(i in 1:nchx) repx[i] = substr(ff[1],start=i,stop=i)
+for(i in 1:nchx) repx[i] = substr(sequence[1],start=i,stop=i)
 
-nchy = nchar(ff[2])
+nchy = nchar(sequence[2])
 repy = rep(0,nchy)
-for(i in 1:nchy) repy[i] = substr(ff[2],start=i,stop=i)
+for(i in 1:nchy) repy[i] = substr(sequence[2],start=i,stop=i)
 
 F = matrix(0,nchx+1,nchy+1)
-dimnames(F) = list(c("",repx),c("",repy))
+
 
 for (i in 1:nchx) F[i+1,1] = i*g_e
 for (j in 1:nchy) F[1,j+1] = j*g_e
@@ -101,13 +101,13 @@ for (i in 1:nchx)
   }
 }
 
+
 # trace back 
 
 AlignmentA = ""
 AlignmentB = ""
-Final_a <- 2
-Final_b <- 2
-
+Final_a<-2
+Final_b<-2
 while ( Final_a < nchx + 1 || Final_b < nchy + 1 )
 {
   Score <- F[nchx + 1,nchy + 1]
@@ -116,26 +116,29 @@ while ( Final_a < nchx + 1 || Final_b < nchy + 1 )
   ScoreLeft <- F[nchx , nchy + 1]
   if (Score == ScoreDiag + s_m[repx[nchx],repy[nchy]])
   {
-    AlignmentA <- paste(AlignmentA,repx[nchx], sep="") 
-    AlignmentB <- paste(AlignmentB,repy[nchy], sep="")
+    AlignmentA <- paste(AlignmentA,repx[nchx]) 
+    AlignmentB <- paste(AlignmentB,repy[nchy])
     nchx <- nchx - 1
     nchy <- nchy - 1
-    Final_a <- Final_a + 1
-    Final_b <- Final_b + 1
+    Final_a<-Final_a+1
+    Final_b<-Final_b+1
+
   }
   else if (Score == ScoreLeft + as.numeric(g_e) )
   {
-    AlignmentA <- paste(AlignmentA,repx[nchx], sep="") 
-    AlignmentB <- paste(AlignmentB,"-", sep="")
+    AlignmentA <- paste(AlignmentA,repx[nchx]) 
+    AlignmentB <- paste(AlignmentB,"-")
     nchx <- nchx - 1
-    Final_a <- Final_a + 1
+    Final_a<-Final_a+1
+
   }
   else if (Score == ScoreUp + as.numeric(g_e) )
   {
-    AlignmentA <- paste(AlignmentA,"-", sep="") 
-    AlignmentB <- paste(AlignmentB,repy[nchy], sep="")
+    AlignmentA <- paste(AlignmentA,"-") 
+    AlignmentB <- paste(AlignmentB,repy[nchy])
     nchy <- nchy - 1
-    Final_b <- Final_b + 1
+    Final_b<-Final_b+1
+
   }
   
 }
