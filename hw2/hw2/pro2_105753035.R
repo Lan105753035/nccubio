@@ -97,41 +97,7 @@ for (i in 1:x)
 }
 
 write.table(M,file="matrix.txt")
-# trace back
 
-align1Buf = ""
-align2Buf = ""
-xaxis<-1
-yaxis<-1
-
-while ( xaxis < x + 1 || yaxis < y + 1 )
-{
-  currentCell <- M[x + 1,y + 1]
-  saboveleft <- M[x , y ]
-  sabove <- M[x + 1, y]
-  sleft <- M[x , y + 1]
-  if (currentCell == saboveleft + s_m[repx[x],repy[y]])
-  {
-    align1Buf <- paste(align1Buf,repx[x]) 
-    align2Buf <- paste(align2Buf,repy[y])
-    x <- x - 1
-    y <- y - 1
-  }
-  else if (currentCell == sleft + as.numeric(g_e) )
-  {
-    align1Buf <- paste(align1Buf,repx[x]) 
-    align2Buf <- paste(align2Buf,"-")
-    x <- x - 1
-    yaxis<-yaxis+1
-  }
-  else if (currentCell == sabove + as.numeric(g_e) )
-  {
-    align1Buf <- paste(align1Buf,"-") 
-    align2Buf <- paste(align2Buf,repy[y])
-    y <- y - 1
-    xaxis<-xaxis+1
-  }  
-}
 
 
 
@@ -155,7 +121,4 @@ print(aln_score)
 
 # output
 writeXStringSet(ff, o_f)
-write(align1Buf,file=o_f,append=FALSE)
-write(align2Buf,file=o_f,append=TRUE)
-print(align1Buf)
-print(align2Buf)
+
