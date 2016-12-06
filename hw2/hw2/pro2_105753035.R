@@ -79,23 +79,16 @@ for (i in 1:x)
       for (a in 1:x) M[a+1,1] = g_o+(a-1)*g_e
       for (b in 1:y) M[1,b+1] = g_o+(b-1)*g_e
     if(repx[i]==repy[j])
-      {
-      aboveleft=M[i,j]+s_m[repx[i],repy[j]]
-    }else{
-      aboveleft=M[i,j]+g_o
-    }
+      {aboveleft=M[i,j]+s_m[repx[i],repy[j]]}
+    else{aboveleft=M[i,j]+g_o}
     left=M[i,j+1]+g_e
     above=M[i+1,j]+g_e
     M[i+1,j+1]=max(aboveleft,left,above)
     }
     if(aln_mode=="local"){
-
       if(repx[i]==repy[j])
-      {
-        aboveleft=M[i,j]+s_m[repx[i],repy[j]]
-      }else{
-        aboveleft=M[i,j]+g_o
-      }
+      {aboveleft=M[i,j]+s_m[repx[i],repy[j]]}
+      else{aboveleft=M[i,j]+g_o}
       left=M[i,j+1]+g_e
       above=M[i+1,j]+g_e
       M[i+1,j+1]=max(aboveleft,left,above,0)
@@ -108,10 +101,10 @@ write.table(M,file="matrix.txt")
 
 align1Buf = ""
 align2Buf = ""
-Final_a<-1
-Final_b<-1
+xaxis<-1
+yaxis<-1
 
-while ( Final_a < x + 1 || Final_b < y + 1 )
+while ( xaxis < x + 1 || yaxis < y + 1 )
 {
   currentCell <- M[x + 1,y + 1]
   saboveleft <- M[x , y ]
@@ -123,23 +116,21 @@ while ( Final_a < x + 1 || Final_b < y + 1 )
     align2Buf <- paste(align2Buf,repy[y])
     x <- x - 1
     y <- y - 1
-
   }
   else if (currentCell == sleft + as.numeric(g_e) )
   {
     align1Buf <- paste(align1Buf,repx[x]) 
     align2Buf <- paste(align2Buf,"-")
     x <- x - 1
-    Final_b<-Final_b+1
+    yaxis<-yaxis+1
   }
   else if (currentCell == sabove + as.numeric(g_e) )
   {
     align1Buf <- paste(align1Buf,"-") 
     align2Buf <- paste(align2Buf,repy[y])
     y <- y - 1
-    Final_a<-Final_a+1
-  }
-  
+    xaxis<-xaxis+1
+  }  
 }
 
 
